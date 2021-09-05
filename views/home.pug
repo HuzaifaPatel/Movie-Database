@@ -1,0 +1,53 @@
+extends index
+block link
+  -var active = "Home";
+block content
+    .home-content
+      if session.l === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; Username or Password is incorrect
+      else if session.l === 1
+        .success(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2714; Login Successful
+      h2.home-header Welcome
+      h2.home-header(style="left: 75px;") Movies Recently Added
+      .home-divider-bar
+        hr
+        hr
+      p
+        | Welcome to the Movie Database, the world&apos;s best website to
+        | find information on your favourite movie,
+        | actor, writer, director and the world of hollywood.
+      p
+        | Our community has commited countless hours gathering information
+        | for the database. 
+
+      p(style="margin-bottom: -20px;")
+        | Be sure to check out the movies we have archived, the profile of 
+        | your favourite actor, other users of the site, and their reviews.
+        | If you want to share your experience of a movie you have watched, 
+        | make sure to write a review by first   
+        a(href='/join' style="color: #fc0")="joining us!"
+
+      each movie, i in lastTen
+        .trending
+          .trending-content
+            a(href='movies/' + movie.Title.toLowerCase().replace(/\s/g,"-"))
+              h4(style="display:none;").title=movie.Title
+              if movie.Title.length > 27
+                h4.title=movie.Title.substring(0, 27) + "..."
+              else
+                h4.title=movie.Title
+            ul
+              li Released: #{movie.Released}
+              li Runtime: #{movie.Runtime}
+              li(style="display:none") #{movie.Genre}
+              if movie.Genre.length > 25
+                li Genre: #{movie.Genre.substring(0,25) + "..."}
+              else
+                li Genre: #{movie.Genre}
+            img(src=movie.Poster)
+            br
+            br
+          br
+

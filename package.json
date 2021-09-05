@@ -1,0 +1,26 @@
+{
+  "name": "myfiles",
+  "version": "1.0.0",
+  "description": "Movie Database",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^3.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.11",
+    "movie-art": "^2.0.3",
+    "movie-trailer": "^2.0.6",
+    "nodemailer": "^6.4.16",
+    "pug": "^3.0.0",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm start",
+    "start": "node server.js"
+  },
+  "author": "Huzaifa Patel",
+  "license": "ISC"
+}

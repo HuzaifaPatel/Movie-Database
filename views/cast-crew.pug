@@ -1,0 +1,55 @@
+extends index
+block link
+   -var active = "Movies";
+block content
+    .uam-content
+      .side-bar
+        a.bar3(href=url.slice(0,-1).join("/")) Overview
+        a.side-bar-active(href=url.join("/")) Cast & Crew
+        a.bar3(href=url.slice(0, -1).join("/") + "/reviews") Movie Reviews
+        a.bar3(href=url.slice(0,-1).join("/") + "/related") Related movies
+      .overview-top
+        hr
+        .flag
+          ul.f32
+            li.flag.us
+        .movie-name
+          h1 Cast & Crew of #{movie[0].Title}
+      if cast.length != 0
+        .number-of-type
+          h2 Cast: #{cast.length}
+        .community-instructions
+          p Click on the person&apos;s name to view their profile
+        table.video-table(align='center' border='1px')
+          br
+          br
+          tr
+            th
+            th
+            th
+            th Name
+            th Role
+            th &zwnj; 
+          tr
+            td
+            td
+            td(style="visibility: hidden;")="spaces"
+            td(style='visibility: hidden;') Huzaifa Patel
+            td(style='visibility: hidden;') Actor
+            td(style='visibility: hidden;') Profile
+              button(type='submit') Unfollow
+          tr
+          each person, i in cast
+            tr
+              td
+              td
+              td
+              td
+                a(style={color: person.color} href="/people/" + person.url_name)=person.firstName + " " +person.lastName
+              td=person.type
+              td
+            tr
+      else
+        .number-of-type
+          br
+          h2="Not Following Anyone"

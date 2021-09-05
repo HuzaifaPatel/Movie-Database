@@ -1,0 +1,67 @@
+extends index
+
+block content
+    .join-content
+      if session.n === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; Username Already Exists.
+      else if session.o === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; All Fields Must Be Filled In.
+      else if session.ab === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; Usernames Should Not Contain Spaces or Special Characters.
+      else if session.o === 1 || session.n === 1
+        .success(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2714; Successfully Registered
+      .side-bar
+        a.side-bar-active(href='join') Join The Movie Database
+        a.bar2(href='help') Reset Password
+      h2.join-header Join The Movie Database
+      h2.join-header Important Information
+      .join-divider-bar
+        hr
+        hr
+      .join-form
+        form(type='submit' method='POST' action='/join')
+          p
+            label(for='fname') First name:
+            input#fname(type='text' name='fname')
+            br
+            br
+          p
+            label(for='last-name') Last name: &zwnj; &zwnj;
+            input#lname(type='text' name='lname')
+            br
+            br
+          p
+            label(for='alias') Username:
+            input#alias(type='text' name='alias')
+            br
+            br
+          p
+            label(for='email') Email:
+            input#email(type='text' name='email')
+            br
+            br
+          p
+            label(for='password') Password:
+            input#email(type='password' name='password')
+            br
+            br
+          p
+            label(for='country') Country:
+            select#country(name='country')
+              option(value='ca') Canada
+              option(value='us') United States
+          label.comment-label(for='comment' style="bottom: 80px;") Comments:
+          // <input type="text" id="comment" name="comment"><br><br>
+          textarea#comment(name='comment' rows='1' cols='5' onclick='removeTextArea()')="Tell us a little bit about yourself."
+          button Join the Movie Database
+      .join-important-info
+        li You must be 18 years or older to join The Movie Database
+        li All fields must be entered with data
+        li
+          | By signing up, you accept the 
+          a(href='') terms and services
+      script(src='/js/controller.js')

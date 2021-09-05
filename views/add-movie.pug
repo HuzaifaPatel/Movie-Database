@@ -1,0 +1,127 @@
+extends index
+block link
+  -var active = "Movies";
+block content
+    .add-movie-content
+      if req.session.j === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; You Must Be A Contributor To Add A Movie
+      if req.session.e === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; All Fields Were Not Entered Correctly
+      else if req.session.m === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; Movie With That Name Already Exists
+      else if req.session.e === 1
+        .success(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2714; Movie Added
+      .side-bar
+        a.bar1(href='movies') All Movies
+        a.side-bar-active(href='add-movie') Add Movie
+      h2.add-movie-header Add a Movie
+      h2.add-movie-header Important Information
+      .join-divider-bar
+        hr
+        hr
+      .add-movie-form
+        form(action="movies" method="POST")
+          p
+            label(for='Title') Movie Name: 
+            input#movie-name(type='text' name='Title')
+            br
+            br
+          p
+            label(for='Released') Release Date: 
+            input#release-date(type='date' name='Released')
+            br
+            br
+
+          p
+            label(for='Year') Year: 
+            input#year(type='number' name='Year' min=1888 max=2020 style="width:87px;")
+            br
+            br
+
+          p
+            //- label(for='Genre') Genre: 
+            //- input#genre(type='text' name='Genre')
+            //- br
+            //- br
+
+            label(for='Genre') Genre: 
+            select#genre(name='Genre')
+              option(value='')
+              option(value='Comedy') Comedy
+              option(value='SCI-FI') SCI-FI
+              option(value='Horror') Horror
+              option(value='Romance') Romance
+              option(value='Action') Action
+              option(value='Thriller') Thriller
+              option(value='Drama') Drama
+              option(value='Mystery') Mystery
+              option(value='Crime') Crime
+              option(value='Animation') Animation
+              option(value='Adventure') Adventure
+              option(value='Fantasy') Fantasy
+              option(value='Family') Family
+              option(value='Biography') Biography
+              option(value='History') History
+          p
+            label(for='Runtime') Runtime: &zwnj; &zwnj;
+            input#runtime(type='number' name='Runtime' style="width: 88px;")
+            br
+            br
+          p
+            //- label(for='Rating') Parental Rating: 
+            //- input#parental-rating(type='text' name='Rating')
+            //- br
+            //- br
+
+            label(for='Rating') Parental Rating: 
+            select#parental-rating(name='Rating' style="width: 88px;")
+              option(value='')
+              option(value='G') G
+              option(value='PG') PG
+              option(value='PG-14') PG-14
+              option(value='18+') 18+
+              option(value='R') R
+          p
+            label(for='Country') Country: 
+            select#country(name='Country')
+              option(value='')
+              option(value='ca') Canada
+              option(value='us') United States
+          p
+            label(for='Actors') Actors: 
+            select#actors( type='text' name='Actors' value='')
+              option(value="")=""
+              each actor, i in splitPeople['actors']
+                -var name = actor['firstName'] + " " + actor['lastName']
+                  option(value=name)=name
+            br
+            br
+          p
+            label(for='Writer') Writers: 
+            select#writers(type='text' name='Writer' value='')
+              option(value="")=""
+              each writer, i in splitPeople['writers']
+                -var name = writer['firstName'] + " " + writer['lastName']
+                  option(value=name)=name
+            br
+            br
+          p
+            label(for='Director') Director: 
+            select#director(type='text' name='Director')
+              option(value="")=""
+              each director, i in splitPeople['directors']
+                -var name = director['firstName'] + " " + director['lastName']
+                option(value=name)=name
+            br
+            br
+          label.comment-label(style="bottom: 100px;" for='Plot') Description:
+          // <input type="text" id="comment" name="comment"><br><br>
+          textarea#comment(name='Plot' rows='1' cols='5')
+          button Add the Movie
+      .add-movie-important-info
+        li(style="position: relative; bottom: 30px;") All the fields must be entered with data
+    script(src='/js/controller.js')

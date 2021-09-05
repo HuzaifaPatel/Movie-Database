@@ -1,0 +1,63 @@
+extends index
+block link
+  -var active = "Members";
+block content
+    .uam-content
+      .side-bar
+        span(style={color : user.color})=user.firstName + " " + user.lastName
+        a.bar1(href=url.slice(0,-1).join("/")) Overview
+        a.bar1(href=url.slice(0,-1).join("/") + '/followers') Followers
+        a.side-bar-active(href=url.join("/")) Following
+        a.bar2(href=url.slice(0,-1).join("/") + '/reviews') User&apos;s Reviews
+        if req.session.user != undefined
+          if req.params.user == req.session.user['url_name']
+            a.bar2(href=url.slice(0,-1).join("/") + '/recommended') Recommended Movies
+      .overview-top
+        hr
+        .flag
+          ul.f32
+            li(class="flag " + user.country)
+        .profile-name
+          h1
+            span(style={color: user.color})= user.firstName  + "'s"
+            |  Following
+      if user['following'].length != 0
+        .number-of-type
+          h2 Following: #{following.length}
+        .community-instructions
+          p Click on the person&apos;s name to view their profile
+        table.video-table(align='center' border='1px')
+          br
+          br
+          tr
+            th
+            th Name
+            th Type
+            th &zwnj; 
+          tr
+            td(style="visibility: hidden;")="spaces"
+            td(style='visibility: hidden;') Huzaifa Patel
+            td(style='visibility: hidden;') Actor
+            td(style='visibility: hidden;') Profile
+              button(type='submit') Unfollow
+          tr
+          each follow, i in following
+            tr
+              td
+              td
+                if follow['type'] == 'Contributor' || follow['type'] == 'Regular'
+                  a(style={color : follow.color} href=url.slice(0,-2).join("/") + "/" + follow.url_name)=follow.firstName + " " +follow.lastName
+                else
+                  a(style={color : follow.color} href=url.slice(0,-3).join("/") + "/people/" + follow.url_name)=follow.firstName + " " +follow.lastName
+              td=follow.type
+              td
+                if canUnfollow
+                  form(action=url.join("/") method="POST")
+                    if follow.type == "Actor" || follow.type == "Writer" || follow.type == "Director"
+                      input(style="display : none;" type='text' name='type' value="person")
+                    button(type='submit' value=i name="index") Unfollow
+            tr
+      else
+        .number-of-type
+          br
+          h2="Not Following Anyone"

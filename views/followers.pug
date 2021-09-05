@@ -1,0 +1,56 @@
+extends index
+block link
+  -var active = "Members";
+block content
+    .uam-content
+      .side-bar
+        span(style={color : user.color})=user.firstName + " " + user.lastName
+        a.bar1(href=url.slice(0,-1).join("/")) Overview
+        a.side-bar-active(href=url.join("/")) Followers
+        a.bar2(href=url.slice(0,-1).join("/") + '/following') Following
+        a.bar2(href=url.slice(0,-1).join("/") + '/reviews') User&apos;s Reviews
+        if req.session.user != undefined
+          if req.params.user == req.session.user['url_name']
+            a.bar2(href=url.slice(0,-1).join("/") + '/recommended') Recommended Movies
+      .overview-top
+        hr
+        .flag
+          ul.f32
+            li(class="flag " + user.country)
+        .profile-name
+          h1
+            span(style={color: user.color})=user.firstName + "'s"
+            |  Followers
+      if user['followers'].length != 0
+        .number-of-type
+          h2 Followers: #{user['followers'].length}
+        .community-instructions
+          p Click on the person&apos;s name to view their profile
+
+        table.video-table(align='center' border='1px')
+          br
+          br
+          tr
+            th
+            th Name
+            th Type
+            th &zwnj;
+          tr
+            td(style='visibility: hidden;') Huzaifa Patel
+            td(style='visibility: hidden;') Actor
+            td(style='visibility: hidden;') Profile
+              button(type='submit') Unfollow
+          tr
+
+          each follower, i in followers
+            tr
+              td
+              td
+                a(style={color : follower.color} href=url.slice(0,-2).join("/") + "/" + follower.url_name)=follower.firstName + " " +follower.lastName
+              td=follower.type
+              td
+            tr
+      else
+          .number-of-type
+            br
+            h2="No Followers"

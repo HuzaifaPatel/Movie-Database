@@ -1,0 +1,47 @@
+extends index
+block link
+  -var active = "Members";
+block content
+    .uam-content
+      if req.session.k === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; You Must Be A Contributor To Add People
+      if req.session.f === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; That Person Already Exists
+      if req.session.p === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; All Fields Must Be Filled In
+      else if req.session.f === 1
+        .success(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2714; Person Added
+      .side-bar
+        a.bar1(href='users') All Users
+        a.side-bar-active(href='people') All People
+        if session.loggedin
+          a.bar1(href='add-person') Add Person
+      .overview-top
+        hr
+        .flag
+          ul.f32
+            li.flag
+        .profile-name
+          h1(style='color: #fff;') All Actors/Directors/Writers
+      .number-of-type
+        h2 All #{people.length} Actors/Directors/Writers
+      .community-instructions
+        p Click on the person&apos;s name to view their profile
+      table.video-table(align='center' border='1px')
+        br
+        br
+        tr
+          th
+          th Name
+          th Type
+        each person, i in people
+          tr
+            td
+            td
+              a(style={'color' : person.color} href='/people/~'+person.firstName.toLowerCase()+"-"+person.lastName.toLowerCase())=person.firstName + " " + person.lastName
+            td=person.type
+        script("/js/controller.js")

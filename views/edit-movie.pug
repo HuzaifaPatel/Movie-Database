@@ -1,0 +1,55 @@
+extends index
+
+block content
+    .uam-content(style='height: 350px;')
+      .overview-top(style='position:relative; top: 222px;')
+        hr
+        .flag(style='visibility: hidden;')
+          ul.f32
+            li.flag.ca
+        .profile-name
+          h1 Change #{movie.Title} Information
+          //
+            <span>Huzaifa Patel's</span>
+            <span>Settings</span>
+        .back-to-profile-link
+          a(href=url.slice(0,-1).join("/")) Back to Movie
+      .change-settings
+        form(action=url.slice(0,-1).join("/") method='POST')
+          label
+            strong Add Actor:
+          select#add_actors(name='actors')
+            option(value="")=""
+            each actor, i in splitPeople['actors']
+              -var name = actor['firstName'] + " " + actor['lastName']
+              - if (!movie['Actors'].includes(name))
+                option(value=name)=name
+          br
+          br
+          label
+            strong Add Writers:
+          select#add_writers(style='left: 24px;' name='writers')
+            option(value="")=""
+            each writer, i in splitPeople['writers']
+              -var name = writer['firstName'] + " " + writer['lastName']
+                option(value=name)=name
+          br
+          br
+          label
+            strong Add Directors:
+          select#add_actors(style='left: 10px;' name='directors')
+            option(value="")=""
+            each director, i in splitPeople['directors']
+              -var name = director['firstName'] + " " + director['lastName']
+              option(value=name)=name
+
+          br
+          br
+          label
+            strong Add Genre:
+          select#add_genre(style='left: 33px;' name='genres')
+            option(value="")=""
+            each genre, i in availableGenres
+              option(value=genre)=genre
+
+          button(style='position: relative; right: 285px;' onclick='redirect()') Save Changes

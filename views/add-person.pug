@@ -1,0 +1,51 @@
+extends index
+block link
+  -var active = "Members";
+block content
+    .add-actor-content
+      .side-bar
+        a.bar1(href='/users') All Users
+        a.bar2(href='/people') All People
+        a.side-bar-active(href='/add-person') Add Person
+      h2.add-actor-header Add an Actor/Director/Writer
+      .join-divider-bar
+        hr
+      .add-actor-form
+        form(action='/add-person' method='POST')
+          p
+            label(for='firstName') First Name: 
+            input#movie-name(type='text' name='firstName')
+            br
+            br
+          p
+            label(for='lastName') Last Name: 
+            input#movie-name(type='text' name='lastName')
+            br
+            br
+          p
+            label(for='country') Country: 
+            select#country(name='country' style="left: 0px;")
+              option(value='ca') Canada
+              option(value='us') United States
+            br
+            br
+          h3 Person Type
+          p
+            label(for='Actor') Actor: 
+            input#actor(type='radio' name='type' value="Actor")
+            br
+            br
+
+          p
+            label(for='Writer') Writer: 
+            input#writer(type='radio' name='type' value="Writer")
+            br
+            br
+
+          p
+            label(for='Director') Director: 
+            input#director(type='radio' name='type' value="Director")
+            br
+            br
+          button Add Person
+        script(src='/js/controller.js')

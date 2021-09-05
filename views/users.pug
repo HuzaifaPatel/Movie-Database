@@ -1,0 +1,37 @@
+extends index
+block link
+  -var active = "Members";
+block content
+    .uam-content
+      .side-bar
+        a.side-bar-active(href='users') All Users
+        a.bar1(href='people') All People
+        if session.loggedin
+          a.bar1(href='add-person') Add Person
+      .overview-top
+        hr
+        .flag
+          ul.f32
+            li.flag
+        .profile-name
+          h1(style='color: #fff;') All Users
+      .number-of-type
+        h2= "All " + users.length + " Users"
+      .community-instructions
+        p Click on the person&apos;s name to view their profile
+      table.video-table(align='center' border='1px')
+        br
+        br
+        tr
+          th
+          th Name
+          th Username
+          th User Type
+        each user, i in users
+          tr
+            td
+            // td(style='color: #ed5959;')= user.firstName + " " + user.lastName
+            td(style={'color:' : user.color})
+              a(style={'color': user.color} href='/users/' + user.url_name )= user.firstName + " " + user.lastName
+            td= user.alias
+            td= user.type

@@ -1,0 +1,41 @@
+extends index
+
+block content
+    .help-content
+      if req.session.w === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; User With That Email Does Not Exist
+      else if req.session.w === 1
+        .success(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2714; Reset Email Sent
+      else if req.session.q === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; Something went wrong. Your Password Was Not Reset
+      else if req.session.q === -2
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; Your Reset Password Link Has Expired
+      else if req.session.q === 1
+        .success(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2714; Password Successfully Updated
+      .side-bar
+        a.bar2(href='join') Join The Movie Database
+        a.side-bar-active(href='help') Reset Password
+      h2.help-header Reset Password
+      h2.help-header Important Information
+      .join-divider-bar
+        hr
+        hr
+      .join-form
+        form(type='submit' method='POST' action='/help')
+          p
+            label(for='email') Email: &zwnj; &zwnj; 
+            input#email(type='text' name='email')
+            br
+            br
+          button Submit
+        br
+      .help-important-info
+        li Our emails may get sent to your junk box.
+        li Do not reply to our emails.
+        li Reset links expire after 25 minutes.
+        li Do not share your reset link with others.

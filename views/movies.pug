@@ -1,0 +1,110 @@
+extends index
+block link
+  -var active = "Movies";
+block content
+    .related-movies-body
+      .side-bar
+        a.side-bar-active(href='movies') All Movies
+        if session.loggedin && session.user['type'] == "Contributor"
+          a.bar2(href='add-movie') Add Movie
+      .overview-top
+        hr
+        .movie-name(style='bottom: 227px;')
+          if req.query['advanced-search'] == 'advanced-search'
+            h1 Advanced Search Results
+          else if req.query['genre'] != undefined
+            h1 All #{req.query['genre']} Movies
+          else
+            h1 All Movies
+      if columnOne.length == 0
+        .search
+          label
+            strong No Movies Found
+        .advanced-search(style="position: relative; bottom: 210px; left: 200px;")
+          a(href='/movies/advanced-search')
+            | Back to Advanced Search
+      else
+        .search
+          label
+            strong Search:
+          input
+        .advanced-search
+          a(href='/movies/advanced-search')
+            | Advanced Search
+        .community-instructions(style='bottom: 239px;')
+          p Click on the movie name to view its page
+        .row(style="bottom: 219px;")
+          .column
+            each movie, i in columnOne
+              .related-movies-one
+                .related-movies-content-one
+                  if req.query['genre'] != undefined
+                    a(href='/movies/'+movie.Title.toLowerCase().replace(/\s/g,"-"))
+                      if movie.Title.length > 25
+                        h4.title=movie.Title.substring(0, 25) + "..."
+                      else
+                        h4.title=movie.Title
+                  else
+                    a(href='movies/' + movie.Title.toLowerCase().replace(/\s/g,"-"))
+                      h4(style="display:none;").title=movie.Title
+                      if movie.Title.length > 25
+                        h4.title=movie.Title.substring(0, 25) + "..."
+                      else
+                        h4.title=movie.Title
+                  ul
+                    li Released: #{movie.Released}
+                    li Runtime: #{movie.Runtime}
+                    li(style="display:none") #{movie.Genre}
+                    if movie.Genre.length > 26
+                      li Genre: #{movie.Genre.substring(0,23) + "..."}
+                    else
+                      li Genre: #{movie.Genre}
+                  img(src=movie.Poster)
+                  br
+                  br
+                br
+
+          .column
+            each movie, i in columnTwo
+              .related-movies-one
+                .related-movies-content-one
+                  if req.query['genre'] != undefined
+                    a(href=movie.Title.toLowerCase().replace(/\s/g,"-"))
+                      if movie.Title.length > 25
+                        h4.title=movie.Title.substring(0, 25) + "..."
+                      else
+                        h4.title=movie.Title
+                  else
+                    a(href='movies/' + movie.Title.toLowerCase().replace(/\s/g,"-"))
+                      h4(style="display:none;").title=movie.Title
+                      if movie.Title.length > 25
+                        h4.title=movie.Title.substring(0, 25) +  "..."
+                      else
+                        h4.title=movie.Title 
+                  ul
+                    li Released: #{movie.Released}
+                    li Runtime: #{movie.Runtime}
+                    li(style="display:none") #{movie.Genre}
+                    if movie.Genre.length > 26
+                      li Genre: #{movie.Genre.substring(0,23) + "..."}
+                    else
+                      li Genre: #{movie.Genre}
+                  img(src=movie.Poster)
+                  br
+                  br
+                br
+    script.
+      const searchInput = document.getElementsByClassName("search");
+      const rows = document.querySelectorAll(".related-movies-one");
+      console.log(rows);
+      searchInput[0].addEventListener("keyup", function (event) {
+        const q = event.target.value.toLowerCase();
+        rows.forEach((row) => {
+          console.log(row.querySelectorAll("h4")[0].textContent.toLowerCase());
+          if(row.querySelector("h4").textContent.toLowerCase().includes(q) || row.querySelectorAll("li")[2].textContent.toLowerCase().includes(q)){
+            row.style.display = ""
+          }else{
+            row.style.display = "none"
+          }
+        });
+      });

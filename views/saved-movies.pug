@@ -1,0 +1,89 @@
+extends index
+block link
+  -var active = "users";
+block content
+    .related-movies-body
+      .side-bar
+        span(style={color : user.color})=user.firstName + " " + user.lastName
+        a.bar1(href=url.slice(0,-1).join("/")) Overview
+        a.bar1(href=url.slice(0,-1).join("/") + "/followers") Followers
+        a.bar2(href=url.slice(0,-1).join("/") + "/following") Following
+        a.side-bar-active(href=url.join("/")) Saved Movies
+        a.bar2(href=url.slice(0,-1).join("/") + '/reviews') User&apos;s Review(s)
+      .overview-top
+        hr
+        .flag
+          ul.f32
+            li(class="flag " + user.country)
+        .movie-name
+          h1
+            span(style={color : user.color})= user.alias  + "'s"
+            |  Saved Movies
+      .search(style='bottom: 281px;')
+        label
+          strong Search:
+        input
+      .community-instructions(style='bottom: 276px;')
+        p Click on the movie name to view its page
+      .row(style='bottom: 256px;')
+        .column
+          .related-movies-one
+            .related-movies-content-one
+              a(href='movie.html')
+                h4.title Spies Like Us
+              ul
+                li Released: Dec 06, 1985
+                li Runtime: 136 minutes
+                li Genre: Action, Adventure, Thriller
+              img(src='https://m.media-amazon.com/images/M/MV5BZmY1OWMzOWQtMjM0MS00N2RmLWE4ZDUtNDU4ODRiM2ZkODExXkEyXkFqcGdeQXVyNzc5MjA3OA@@._V1_SX300.jpg')
+              br
+              br
+          br
+          .related-movies-one
+            .related-movies-content-one
+              a(href='movie.html')
+                h4.title Spies Like Us
+              ul
+                li Released: Dec 06, 1985
+                li Runtime: 136 minutes
+                li Genre: Action, Adventure, Thriller
+              img(src='https://m.media-amazon.com/images/M/MV5BZmY1OWMzOWQtMjM0MS00N2RmLWE4ZDUtNDU4ODRiM2ZkODExXkEyXkFqcGdeQXVyNzc5MjA3OA@@._V1_SX300.jpg')
+              br
+              br
+          br
+          .related-movies-one
+            .related-movies-content-one
+              a(href='movie.html')
+                h4.title Spies Like Us
+              ul
+                li Released: Dec 06, 1985
+                li Runtime: 136 minutes
+                li Genre: Action, Adventure, Thriller
+              img(src='https://m.media-amazon.com/images/M/MV5BZmY1OWMzOWQtMjM0MS00N2RmLWE4ZDUtNDU4ODRiM2ZkODExXkEyXkFqcGdeQXVyNzc5MjA3OA@@._V1_SX300.jpg')
+              br
+              br
+          br
+        .column
+          .related-movies-one
+            .related-movies-content-one
+              a(href='movie.html')
+                h4.title Spies Like Us
+              ul
+                li Released: Dec 06, 1985
+                li Runtime: 136 minutes
+                li Genre: Action, Adventure, Thriller
+              img(src='https://m.media-amazon.com/images/M/MV5BZmY1OWMzOWQtMjM0MS00N2RmLWE4ZDUtNDU4ODRiM2ZkODExXkEyXkFqcGdeQXVyNzc5MjA3OA@@._V1_SX300.jpg')
+              br
+              br
+          br
+          .related-movies-one
+            .related-movies-content-one
+              a(href='movie.html')
+                h4.title Spies Like Us
+              ul
+                li Released: Dec 06, 1985
+                li Runtime: 136 minutes
+                li Genre: Action, Adventure, Thriller
+              img(src='https://m.media-amazon.com/images/M/MV5BZmY1OWMzOWQtMjM0MS00N2RmLWE4ZDUtNDU4ODRiM2ZkODExXkEyXkFqcGdeQXVyNzc5MjA3OA@@._V1_SX300.jpg')
+              br
+              br

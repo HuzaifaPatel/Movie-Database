@@ -1,0 +1,66 @@
+extends index
+block link
+  -var active = "Members";
+block content
+    .uam-content(style='height: 300px;')
+      if req.session.a === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; Invalid Color Chosen. Please Enter A Hexcode Value
+      else if req.session.b === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; Username Already Exists
+      else if req.session.c === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; Invalid Password Entered
+      else if req.session.t === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; You Must Be Signed In To Perform That Action
+      else if req.session.a === 1 || req.session.b === 1 || req.session.d === 1
+        .success(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2714; Profile Updated
+
+      .side-bar
+        span(style={color : user.color})=user.firstName + " " + user.lastName
+        a.side-bar-active(href=user.url_name) Overview
+        a.bar1(href=user.url_name + '/followers') Followers
+        a.bar2(href=user.url_name + '/following') Following
+        a.bar2(href=user.url_name + '/reviews') User&apos;s Reviews
+        if req.session.user != undefined
+          if req.params.user == req.session.user['url_name']
+            a.bar2(href=user.url_name + '/recommended') Recommended Movies
+      .overview-top
+        hr
+        .flag
+          ul.f32
+            li(class="flag " + user.country)
+        .profile-name
+          h1(style={color : user.color})= user.alias
+          if session.loggedin
+            form(action=url.join("/")+"/follow" method="POST")
+              button(style={visibility : canFollow} value=followStatus name="status")=followStatus
+        .edit-profile-link
+          a(style={'visibility' : canEdit} href=url.join("/") + '/edit-profile') Edit Profile
+      .interesting-facts
+        h3 Interesting Facts
+        hr
+        li
+          strong Real Name: 
+          | #{user.firstName + " " +user.lastName}
+        li
+          strong Username: 
+          | #{user.alias}
+        li
+          strong Date Joined: 
+          | #{user.joined}
+      .user-stats
+        h3 User Stats
+        hr
+        li
+          strong Following: 
+          | #{user.following.length}
+        li
+          strong Followers: 
+          | #{user.followers.length}
+        li
+          strong Reviews submitted: 
+          | #{user.reviews_submitted}

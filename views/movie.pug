@@ -1,0 +1,110 @@
+extends index
+block link
+  -var active = "Movies";
+block content
+  .uam-content(style='height: 800px;')
+    if req.session.r === -1
+      .error(style='width: 500px;')
+        h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; You Must Be A Contributor To Edit Movies
+    if req.session.s === -1
+      .error(style='width: 500px;')
+        h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; That Person Is Already Part Of The Cast
+    else if req.session.r === 1
+      .success(style='width: 500px;')
+        h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2714; Movie Updated
+    .side-bar
+      a.side-bar-active(href=url.join("/")) Overview
+      a.bar3(href=url.join("/") + '/cast-crew') Cast & Crew
+      a.bar3(href=url.join("/") + '/reviews') Movie Reviews
+      a.bar3(href=url.join("/") + '/related') Related movies
+    .overview-top
+      hr
+      .flag
+        ul.f32
+          li(class="flag " + movie.Country[0].toLowerCase() + movie.Country[1].toLowerCase())
+      .movie-name
+        if movie.Title.length >= 35
+          h1=movie.Title.substring(0,35) + "..."
+        else
+          h1=movie.Title
+        if session.loggedin && session.user['type'] === "Contributor"
+          a(href=url.join("/") + '/edit-movie') Edit Movie
+    .trailer
+      iframe(width='400' height='295' frameborder='0' src="https://www.youtube.com/embed/" + video_id)
+      a(target='_blank' href="https://www.youtube.com/watch?v=" + video_id)
+        h4 Watch on YouTube
+    .movie-info
+      label(style="width: 250px;")
+        strong Title:
+        |  #{movie.Title}
+      p(style="margin: 0px;")
+
+      label
+        strong Release Date:
+        |  #{movie.Released}
+      p(style="margin: 0px;")
+
+      label
+        strong Year:
+        |  #{movie.Year}
+      p(style="margin: 0px;")
+
+      label(style="width: 250px;")
+        strong Country of Origin: 
+        if movie.Country == 'ca'
+          |  Canada
+        else if movie.Country == "us"
+          |  United States
+        else
+          | #{movie.Country}
+      p(style="margin: 0px;")
+
+      label
+        strong Runtime:
+        |  #{movie.Runtime}
+      p(style="margin: 0px;")
+
+      label
+        strong Rating:
+        |  #{movie.Rated}
+      p(style="margin: 0px;")
+
+      label(style="width: 300px;")
+        strong Genre: 
+        | #{movie.Genre}
+      p(style="margin: 0px;")
+
+      label(style="width: 250px; line-height: 17px;")
+        strong Description:
+        p(style="margin: 5px;")
+        | #{movie.Plot}
+
+      hr
+
+      label
+        strong Average Rating:
+        if movie.sumOfRatings == 0 && movie.Reviews.length == 0
+          |  Not Enough Ratings
+        else
+          |  #{avg}/10
+      hr
+      //- p(style="margin: 0px;")
+      //- label(style='width: 260px;')
+      //-   strong Actors: 
+      //-   | #{movie.Actors}
+      //- p(style="margin: 0px;")
+      //- hr
+      //- label(style='width: 260px;')
+      //-   strong Writers: 
+      //-   | #{movie.Writer.replace(/ *\([^)]*\) */g, "")}
+      //- p(style="margin: 0px;")
+      //- hr
+      //- label 
+      //-   strong Director: 
+      //-   | #{movie.Director}
+      //- hr
+      label
+        strong See also
+      each genre, i in genres
+        li
+          a(style=("font-size : 13px;") href='/movies/?genre='+genre)=genre + " Movies"

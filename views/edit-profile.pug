@@ -1,0 +1,49 @@
+extends index
+block link
+  -var active = "Members";
+block content
+  .uam-content(style='height: 320px;')
+    .overview-top(style='position:relative; top: 222px;')
+      hr
+      .flag
+        ul.f32
+          li.flag.ca
+      .profile-name
+        h1(style={color: user.color})
+          span(style={color : user.color})
+          |  #{user.firstName + " " + user.lastName + "'s"} 
+          span(style="color: #fff;")
+            | Settings
+      .back-to-profile-link
+        a(href=url.slice(0,-1).join("/")) Back to Profile
+    .change-settings
+      form(action='/users/'+user.url_name method='POST')
+        //- label
+        //-   strong Change Username: 
+        //- input(style='position: relative; left: 13.5px;' name="alias")
+        //- br
+        //- br
+        label
+          strong Change Name Color: 
+        input(style='position: relative; left: 2px;' value='Hex Code Value' name="color" onclick='removeHexCodeInput()')
+        br
+        br
+        label
+          strong Change User Type: &nbsp;&nbsp;
+        if user.type === "Contributor"
+          input#regular(type='radio' name='user_type' value='Regular')
+          | Regular User
+          input#contributor(type='radio' name='user_type' value='Contributor' checked="")
+          | Contributor User
+        if user.type === "Regular"
+          input#regular(type='radio' name='user_type' value='Regular' checked="")
+          | Regular User
+          input#contributor(type='radio' name='user_type' value='Contributor')
+          | Contributor User
+        br
+        br
+        label
+          strong Confirm Password: &nbsp;&nbsp; 
+        input(type='password' name="password")
+        button Save Changes
+      script(src='/js/controller.js')

@@ -1,0 +1,57 @@
+extends index
+block link
+  -var active = "Movies";
+block content
+    .uam-content(style='height: 400px;')
+      .side-bar(style="visibility : hidden")
+      .overview-top(style="position : relative; right: 50px;")
+        hr
+        .flag(style="opacity:0;")
+          ul.f32
+            li(class="flag ")
+        .profile-name
+          h1
+            | Advanced Movie Search
+          a(style="color: #fc0; position: relative; left: 540px;" href="/movies")
+            | Back to Movies
+        .join-form(style="bottom: 255px;")
+          form(style="position: relative; left: 35px;" type='submit' method='GET' action='/movies')
+            p
+              label(for='title' style="position:relative; left: 50px;") Title: &zwnj; &zwnj;
+              input#title(type='text' name='title')
+              br
+              br
+            p
+              label(for='year' style="position: relative; left: 0px;") Release Year: &zwnj; &zwnj; 
+              input#year(type='number' name='year' min=1888 max=2020 style="width: 90px;")
+              br
+              br
+            p
+              label(for='genre' style="position: relative; left: 40px;") Genre: &zwnj; &zwnj;
+              select#genre(name='genre')
+                option(value='')
+                option(value='Comedy') Comedy
+                option(value='SCI-FI') SCI-FI
+                option(value='Horror') Horror
+                option(value='Romance') Romance
+                option(value='Action') Action
+                option(value='Thriller') Thriller
+                option(value='Drama') Drama
+                option(value='Mystery') Mystery
+                option(value='Crime') Crime
+                option(value='Animation') Animation
+                option(value='Adventure') Adventure
+                option(value='Fantasy') Fantasy
+                option(value='Family') Family
+                option(value='Biography') Biography
+                option(value='History') History
+              br
+            //- p
+            //-   label(for='rating') Average Rating: &zwnj; &zwnj; 
+            //-   input#rating(type='number' name='rating' min=0 max=10 style="width: 90px;")
+            //-   br
+            //-   br
+
+            p
+              input#advanced-search(style='display: none;' name='advanced-search' value='advanced-search')
+            button Search

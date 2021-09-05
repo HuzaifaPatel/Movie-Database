@@ -1,0 +1,68 @@
+extends index
+
+block content
+    .uam-content
+      .side-bar(style="visibility : hidden")
+      .overview-top(style="position : relative; right: 50px;")
+        hr
+        .flag
+          ul.f32
+            li(class="flag " + session.user['country'])
+        .profile-name
+          h1
+            span(style={color: session.user['color']})= session.user['firstName']  + " " + session.user['lastName'] + "'s"
+            |  Notifications
+      if user.notifications.length != 0
+        .number-of-type
+          h2(style="position: relative; right: 50px;") Notifications: #{user.notifications.length}
+        .community-instructions
+          p(style="position : relative; right: 50px;") Click on the person&apos;s name or movie's name to view their profile
+        table.video-table(style="left: 0px; width: 900px;" align='center' border='1px')
+          br
+          br
+          tr
+            th
+            th Date
+            //- th
+            //- th Movie
+            th
+            th Notification 
+            th
+            th &zwnj;
+          tr
+            td(style="visibility: hidden;")="spaces"
+            td(style='visibility: hidden;') Huzaifa Patel
+            td(style='visibility: hidden;') Actor
+            td(style='visibility: hidden;') Profile
+              button(type='submit') Unfollow
+          tr
+          each notification, i in user.notifications
+            tr
+              td
+              td=notification.date
+
+              td
+
+              // td
+              //   a(style={color : "#fc0"} href="/movies/" + notification.movie_url)=notification.movie_name
+
+              // td
+              
+              td
+                a(style="color: #fff; pointer-events: none;")=notification.message + " "
+                a(style={color : notification.color} href="/" + notification.type +"/" + notification.url_name)=notification.firstName + " " + notification.lastName
+                a(style="color: #fff; pointer-events: none;")=" " + notification.message_end
+                a(style={color : "#fc0"} href="/movies/" + notification.movie_url)=notification.movie_name
+
+              td
+              
+              td
+                form(action=url.join("/") method="POST")
+                  button(type='submit' value=i name="index") Remove
+              td
+              td
+            tr
+      else
+        .number-of-type
+          br
+          h2(style="position : relative; right : 50px;")="No New Notifications"

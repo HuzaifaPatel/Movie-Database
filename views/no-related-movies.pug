@@ -1,0 +1,14 @@
+extends index
+
+block link
+  -var active = "Movies";
+block content
+    .related-movies-body
+      .side-bar
+        a.bar3(href=url.slice(0,-1).join("/")) Overview
+        a.bar3(href=url.slice(0,-1).join("/") + "/reviews") Movie Reviews
+        a.side-bar-active(href=url.join("/")) Related films
+      .overview-top
+        .not-found(style="width: 400px; position: relative; bottom: 220px; border: none;")
+          | No Related Movies Found
+

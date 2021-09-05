@@ -1,0 +1,66 @@
+doctype html
+head
+  title The Movie Database
+  link(rel='stylesheet' type='text/css' href='/css/main.css')
+  //- link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+  link(rel='stylesheet' type='text/css' href='https://www.github.com/downloads/lafeber/world-flags-sprite/flags32.css')
+  //- link(rel="shortcut icon" href="#")
+header
+  block link
+    -var active = 'Home';
+  .container
+    .top
+      h3(style="position: relative; left: 186px;") Hundreds of movies and people to discover. Explore now.
+      .sign-in
+        if session.loggedin
+          label
+            | Signed in:
+            a.signed-in(href="/users/"+session.user['url_name'] style={'color': session.user['color']})=session.user['firstName'] + " " + session.user['lastName']
+          label(style="position: relative; top: -5px;")
+            | Username:
+            a.signed-in-alias(href='/users/'+session.user['url_name'] style={'color': session.user['color'], position: relative, left: "60px;"})=session.user['alias']
+          label(style="position: relative; left: 10px; top: -7px;")
+            | Notifications:
+            a.signed-in-notifications(href='/notifications' style={'color': "#fc0"})=session.user['notifications'].length
+          form(name='sign-out-form' action='/logout' method='POST')
+            a.sign-out(onclick='signOut()')
+              label Sign Out
+
+                //- input(style="visibility: hidden;" name="sign-out")
+        else
+          form(action="/login" method='POST')
+            label(for='username')
+              span Username 
+            input(style="left:16px;" type='text' placeholder='' name='username' required='')
+            label(for='password')
+              span
+                br
+                | Password &zwnj; &zwnj;
+            input(type='password' placeholder='' name='password' required='')
+            button(style="left: 27px;" type='submit') Log in
+          a.sign-up(href='/join') Join
+          a.help(href='/help') Help
+        
+      h1
+        a(href='/') The Movie Database
+
+  -var nav = {'Home' : {'url' : '/', 'width' : '120'}, 'Movies' : {'url' : '/movies', 'width' : '140'}, 'Members' : {'url' : '/users', 'width' : '150'}};
+
+  ul#nav
+    each val, key in nav
+      if active === key
+        li.active-nav(style={'width' : val['width'] + "px"})
+          a(href=val['url'])=key
+      else
+        li.nav3(style={'width' : val['width'] + "px"})
+          a(href=val['url'])=key
+
+  script(src='/js/controller.js')
+
+  block content
+
+  footer.footer
+    p
+      | The Movie Database is not in any way affiliated or involved with any of the movies presented on this website. All other content is copyright &copy; The Movie Database.
+
+

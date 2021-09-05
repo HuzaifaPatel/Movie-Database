@@ -1,0 +1,77 @@
+extends index
+
+block link
+  -var active = "Movies";
+block content
+    .related-movies-body
+      .side-bar
+        span(style={color : user.color})=user.firstName + " " + user.lastName
+        a.bar1(href=url.slice(0,-1).join("/")) Overview
+        a.bar1(href=url.slice(0,-1).join("/") + '/followers') Followers
+        a.bar1(href=url.slice(0,-1).join("/") + '/following') Following
+        a.bar2(href=url.slice(0,-1).join("/") + '/reviews') User&apos;s Reviews
+        a.side-bar-active(href=url.slice(0,-1).join("/") + '/recommended') Recommended Movies
+      .overview-top
+        hr
+        .flag(style="opacity:0")
+          ul.f32
+            li(class="flag " + user.country)
+        .profile-name
+          h1
+            // span(style={color: user.color})=user.firstName + "'s"
+            |  Your Movie Recommendations
+      .search(style='bottom: 280px;')
+        label
+          strong Search:
+        input
+      .community-instructions(style='bottom: 275px;')
+        p Click on the movie name to view its page
+      .row(style="bottom: 255px;")
+        .column
+          each movie, i in columnOne
+            .related-movies-one
+              .related-movies-content-one
+                a(href='/movies/' + movie.Title.toLowerCase().replace(/\s/g,"-"))
+                  h4(style="display:none;").title=movie.Title
+                  h4.title=movie.Title.substring(0,27)
+                ul
+                  li Released: #{movie.Released}
+                  li Runtime: #{movie.Runtime}
+                  li(style="display:none") #{movie.Genre}
+                  li Genre: #{movie.Genre.substring(0,20) + "..."}
+                img(src=movie.Poster)
+                br
+                br
+              br
+
+        .column
+          each movie, i in columnTwo
+            .related-movies-one
+              .related-movies-content-one
+                a(href='/movies/' + movie.Title.toLowerCase().replace(/\s/g,"-"))
+                  h4(style="display:none;").title=movie.Title
+                  h4.title=movie.Title.substring(0,27)
+                ul
+                  li Released: #{movie.Released}
+                  li Runtime: #{movie.Runtime}
+                  li(style="display:none") #{movie.Genre}
+                  li Genre: #{movie.Genre.substring(0,20) + "..."}
+                img(src=movie.Poster)
+                br
+                br
+              br
+    script.
+      const searchInput = document.getElementsByClassName("search");
+      const rows = document.querySelectorAll(".related-movies-one");
+      //- console.log(rows);
+      searchInput[0].addEventListener("keyup", function (event) {
+        const q = event.target.value.toLowerCase();
+        rows.forEach((row) => {
+          //- console.log(row.querySelectorAll("h4")[0].textContent.toLowerCase());
+          if(row.querySelector("h4").textContent.toLowerCase().includes(q) || row.querySelectorAll("li")[2].textContent.toLowerCase().includes(q)){
+            row.style.display = ""
+          }else{
+            row.style.display = "none"
+          }
+        });
+      });

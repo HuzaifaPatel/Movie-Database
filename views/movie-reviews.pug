@@ -1,0 +1,55 @@
+extends index
+block link
+   -var active = "Movies";
+block content
+    .review-movies-body(style={'height': 550 + reviews.length*315 + "px;"})
+      if session.g === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; Invalid Review Input
+      else if session.h === -1
+        .error(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2718; You Must Be Signed in to Perform That Action
+      else if session.g === 1
+        .success(style='width: 500px;')
+          h2 &zwnj; &zwnj; &zwnj; &zwnj; &#x2714; Review Added
+      .side-bar
+        a.bar3(href=url.slice(0,-1).join("/")) Overview
+        a.bar3(href=url.slice(0,-1).join("/") + '/cast-crew') Cast & Crew
+        a.side-bar-active(href=url.join("/")) Movie Reviews
+        a.bar3(href=url.slice(0,-1).join("/") + "/related") Related movies
+      .overview-top
+        hr
+        .flag
+          ul.f32
+            li.flag.us
+        .movie-name
+          h1 Reviews of #{movie.Title}
+        .reviews-text
+          h2 Reviews: #{movie.Reviews.length}
+        .review-submission
+          form(action='' method='POST')
+            input(style='visibility: hidden;' name="user_id")
+            p Enter your review:
+            textarea#review-box(name='review_box' rows='1' cols='5')
+            p(style='position: relative; bottom: 10px;') Enter your basic review out of 10:
+            input(name='basic_review' value='')
+            button.review-button(onclick='submitReview()' style="right: 155px;") Submit Review
+        each review, i in reviews
+          .review
+            li
+              strong Movies Name: 
+                a(style="color:#fc0" href=url.slice(0,-1).join("/"))=movie.Title
+            li
+              strong Reviewer: 
+                a(style={color: review['user']['color']} href="/users/" + review['user']['url_name'])=review.user['alias']
+            li
+              strong Date: 
+              | #{review.date}
+            li
+              strong
+                | Basic Review: 
+                span(style='color: #fc0')=review.basic_review + " / 10"
+            textarea#review-box(style='text-align: left;' readonly='' name='review-box' rows='1' cols='5')
+              | #{review.message}
+          br
+          br

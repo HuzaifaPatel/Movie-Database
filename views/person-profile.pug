@@ -1,0 +1,50 @@
+extends index
+block link
+  -var active = "Members";
+
+block content
+    .uam-content(style='height: 300px;')
+      .side-bar
+        span(style={"color" : person.color})=person.firstName + " " + person.lastName
+        a.side-bar-active(href='') Overview
+        a.bar1(href=url.join("/") + '/filmography') Filmography
+        a.bar3(href=url.join("/") + '/frequent-collaborators') Frequent Collaborators
+      .overview-top
+        hr
+        .flag
+          ul.f32
+            li(class="flag " + person.country)
+        .profile-name
+          h1(style={"color" : person.color})=person.firstName + " " + person.lastName
+          if session.loggedin
+            form(action=url.join("/")+"/follow" method="POST")
+              button(value=url)=followStatus
+          else
+            form(action=url.join("/")+"/follow" method="POST")
+              button(style="visibility: hidden;" value=url)=followStatus
+          button(style="visibility : hidden;" value=url)=followStatus
+        .edit-profile-link
+          a(href='' style="visibility : hidden") Edit Profile
+      .interesting-facts(style="position: relative; bottom: 392px;")
+        h3 Interesting Facts
+        hr
+        li
+          strong Real Name: 
+          | #{person.firstName + " " + person.lastName}
+
+        li
+          strong Date Added: 
+            if person.added != undefined
+              | #{person.added}
+            else
+              | Unknown
+
+        li
+          strong Person Type: 
+            | #{person.type}
+      .user-stats(style="position: relative; bottom: 392px;")
+        h3 User Stats
+        hr
+        li
+          strong Followers: 
+          | #{person.followers.length}
