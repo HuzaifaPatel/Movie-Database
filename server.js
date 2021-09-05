@@ -1,12 +1,12 @@
 const express 			= require('express');
-const path 				= require('path');
+const path 			= require('path');
 const mongoose 			= require('mongoose');
 const session 			= require('express-session');
 const MongoStore 		= require('connect-mongo')(session);
 const movieTrailer 		= require('movie-trailer');
-var	  ObjectId 			= require('mongodb').ObjectID;
+var	  ObjectId 		= require('mongodb').ObjectID;
 const controller 		= require('./public/js/controller.js');
-const email				= require('./public/procedures/email.js');
+const email			= require('./public/procedures/email.js');
 const app = express();
 
 mongoose.connect('mongodb://127.0.0.1:27017/the-movie-database', { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
